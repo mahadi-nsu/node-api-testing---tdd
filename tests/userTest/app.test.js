@@ -26,18 +26,23 @@ describe("POST /users", () => {
       );
     });
 
-    it("response has userId" , async () => {
-        const response = await request(app).post("/users").send({
-            username: "username",
-            password: "password",
-          });
-    
-         expect(response.body.userId).toBeDefined();
-    })
+    it("response has userId", async () => {
+      const response = await request(app).post("/users").send({
+        username: "username",
+        password: "password",
+      });
+      console.log(response.body);
+      expect(response.body.userId).toBeDefined();
+    });
   });
 
   describe("When username and password is missing", () => {
-    // should respond with a 404 status code
-    // probably some validation error
+    // should respond with a 404 status code when username/password is missing
+    it("should respond with a 404 status code when password is missing", async () => {
+      const response = await request(app).post("/users").send({
+        username: "username",
+      });
+      expect(response.statusCode).toBe(400);
+    });
   });
 });
